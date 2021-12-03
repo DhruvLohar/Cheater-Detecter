@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCSC Exam Portal</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='exam.css') }}">
+</head>
+<body>
+    <div class="backdrop">
+        <div class="info">
+            <h1 class="subject">Physics</h1>
+            <p class="exam-details">Priliminary Examination 1 &bullet; Objective</p>
+            <!-- <div class="ques-attempted"><span>0</span> questions attempted</div> -->
+        </div>
+        <div class="timer">
+            <i class="ri-timer-line"></i>
+            <span class="countdown">20:00</span>
+        </div>
+    </div>
+    <div class="root-view" style="height: 100vh;">
+        <div class="navigator-view">
+            <div class="attempted"></div>
+            <div class="questions">
+                {% for question in data.questions %}
+                    {% if question.que_id == 1 %}
+                    <div class="question active-que" data-id="{{question.que_id}}">
+                    {% else %}
+                    <div class="question" data-id="{{question.que_id}}">
+                    {% endif %}
+                        <span>{{ question.que_id }}</span>
+                        <p>
+                            {{ question.que }}
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="question-view">
+            <div class="que-content">
+                <span>0{{data._que.que_id}}</span>
+                <p>{{data._que.que}}</p>
+            </div>
+            <div class="options" style="flex-grow: 1;">
+                {% for k, v in data._que.opts.items() %}
+                    <div class="option">
+                        <div class="opt-no">{{k}}</div>
+                        <span>{{v}}</span>
+                    </div>
+                {% endfor %}
+            </div>
+            <div style="display: flex;justify-content: space-between;margin-bottom: 8rem;">
+                <button class="btn" id="prev-btn">
+                    <i class="ri-arrow-left-line"></i>
+                    Previous
+                </button>
+                <button class="btn" id="skip-btn">
+                    Skip
+                    <i class="ri-arrow-right-line"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='exam.js') }}"></script>
+</body>
+</html>
